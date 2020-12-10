@@ -4,6 +4,13 @@ const input = fs.readFileSync("./input", { encoding: "utf-8" }).split("\r\n");
 
 const getSeatID = (row, col) => row * 8 + col;
 
+const getTotalSeats = () => {
+    const seats = [];
+    for(let i=0;i<128*8;i++)
+        seats.push(i);
+    return seats;
+}
+
 const generateRowSearchSpace = (searchSpace) => {
   for (let i = 0; i < 128; i++) searchSpace.push(i);
 };
@@ -56,12 +63,11 @@ function calculateSeat() {
     console.log(maxSeatID);
 
   // part-2
-    console.log(filledSeats.sort());
     const actualSeats = [];
+    const totalSeats = getTotalSeats();
     const set = new Set();
     filledSeats.forEach(seat => set.add(seat));
     set.forEach(seat => actualSeats.push(seat));
-    console.log(actualSeats);
 }
 
 
