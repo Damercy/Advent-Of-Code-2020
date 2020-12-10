@@ -43,14 +43,26 @@ const getColInSeats = (seat) => {
 };
 
 function calculateSeat() {
+  // part-1
+  let filledSeats = [];
   let maxSeatID = -1;
     input.forEach((seat) => {
       const row = getRowInSeats(seat);
       const col = getColInSeats(seat);
       const seatID = getSeatID(row, col);
+      filledSeats.push(seatID);
       maxSeatID = Math.max(maxSeatID, seatID);
     });
     console.log(maxSeatID);
+
+  // part-2
+    console.log(filledSeats.sort());
+    const actualSeats = [];
+    const set = new Set();
+    filledSeats.forEach(seat => set.add(seat));
+    set.forEach(seat => actualSeats.push(seat));
+    console.log(actualSeats);
 }
+
 
 calculateSeat();
