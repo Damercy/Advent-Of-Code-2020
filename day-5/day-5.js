@@ -19,40 +19,38 @@ function binarySearch(isRow, seatCode) {
     ? generateRowSearchSpace(searchSpace)
     : generateColSearchSpace(searchSpace);
   let low = 0,
-    high = searchSpace.length - 1,idx=0;
-  console.log(`searchSpace:${searchSpace} --- low:${low} --- high:${high} --- seatCode:${seatCode}`);
-  while(low<=high && idx<seatCode.length){
-      let mid = low+(high-low)/2;
-      if(seatCode[idx]==='F')
-        high=mid-1;
-      else
-       low=mid+1;
-      idx++;
+    high = searchSpace.length - 1,
+    idx = 0;
+  while (low <= high && idx < seatCode.length - 1) {
+    let mid = low + (high - low) / 2;
+    if (seatCode[idx] === "F" || seatCode[idx] === "L") high = mid - 1;
+    else low = mid + 1;
+    idx++;
   }
+  return Math.round(
+    seatCode[idx] === "F" ? Math.min(high, low) : Math.max(high, low)
+  );
 }
 
-const getRowInSeats = seat => {
-    const firstSevenCharacters = seat.slice(0,7);
-    binarySearch(true,firstSevenCharacters);
-}
+const getRowInSeats = (seat) => {
+  const firstSevenCharacters = seat.slice(0, 7);
+  return binarySearch(true, firstSevenCharacters);
+};
 
-const getColInSeats = seat => {
-    const lastThreeCharacters = seat.slice(7,seat.length);
-    binarySearch(false,lastThreeCharacters);
-}
-
+const getColInSeats = (seat) => {
+  const lastThreeCharacters = seat.slice(7, seat.length);
+  return binarySearch(false, lastThreeCharacters);
+};
 
 function calculateSeat() {
   let maxSeatID = -1;
-  getRowInSeats("BBFFFFFRRL");
-  getColInSeats("BBFFFFFRRL");
-//   input.forEach((seat) => {
-//     const row = getRowInSeats(seat);
-//     const col = getColInSeats(seat);
-//     const seatID = getSeatID(row, col);
-//     maxSeatID = Math.max(maxSeatID, seatID);
-//   });
-//   console.log(maxSeatID);
+    input.forEach((seat) => {
+      const row = getRowInSeats(seat);
+      const col = getColInSeats(seat);
+      const seatID = getSeatID(row, col);
+      maxSeatID = Math.max(maxSeatID, seatID);
+    });
+    console.log(maxSeatID);
 }
 
 calculateSeat();
